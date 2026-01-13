@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "deploy:aws": "bash deploy/aws-s3-deploy.sh",
+    "deploy:aws:cdn": "bash deploy/aws-cloudfront-setup.sh"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
@@ -19,5 +21,9 @@
     "svelte": "^5.43.8",
     "vite": "^7.2.4",
     "vitest": "^4.0.17"
+  },
+  "dependencies": {
+    "epubjs": "^0.3.93",
+    "pdfjs-dist": "^5.4.530"
   }
 }

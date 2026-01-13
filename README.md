@@ -1,6 +1,6 @@
 # RSVP Reader
 
-A Svelte-based Rapid Serial Visual Presentation (RSVP) reader for speed reading.
+A Svelte-based Rapid Serial Visual Presentation (RSVP) reader for speed reading with PDF and EPUB support.
 
 ## What is RSVP?
 
@@ -15,8 +15,11 @@ The app uses **Optimal Recognition Point (ORP)** highlighting - the red letter i
 
 ## Features
 
+- **PDF & EPUB Support**: Upload PDF documents or EPUB e-books directly
 - **Adjustable reading speed**: 50-1000 words per minute (WPM)
 - **ORP highlighting**: Red-highlighted focal letter for faster recognition
+- **Monospace display**: Fixed-width font keeps the focal point stable
+- **Focus mode**: Minimal UI during reading for distraction-free experience
 - **Fade effect**: Optional smooth transitions between words
 - **Punctuation pauses**: Configurable extra pause on sentence-ending punctuation
 - **Periodic pauses**: Optional pause every N words for comprehension
@@ -53,11 +56,24 @@ npm run build
 npm run preview
 ```
 
+### Loading Content
+
+**From Files:**
+1. Click the document icon in the header
+2. Click "Upload PDF or EPUB"
+3. Select your PDF or EPUB file
+4. The text will be extracted and loaded automatically
+
+**From Text:**
+1. Click the document icon in the header
+2. Paste or type your text in the textarea
+3. Click "Load Text"
+
 ### Controls
 
 **Buttons:**
 - **Play**: Start reading from the beginning or current position
-- **Pause**: Pause reading
+- **Pause**: Pause reading (UI enters focus mode with minimal controls)
 - **Resume**: Continue from where you paused
 - **Stop**: Stop and reset to beginning
 - **Restart**: Stop and immediately start from beginning
@@ -66,7 +82,7 @@ npm run preview
 | Key | Action |
 |-----|--------|
 | `Space` | Play/Pause/Resume |
-| `Escape` | Stop |
+| `Escape` | Stop (or close panels) |
 | `Arrow Up` | Increase speed (+25 WPM) |
 | `Arrow Down` | Decrease speed (-25 WPM) |
 | `Arrow Left` | Go back one word |
@@ -84,25 +100,25 @@ Click the gear icon to access settings:
 - **Pause Every N Words**: Take a break every N words (0 = disabled)
 - **Pause Duration**: Length of periodic pauses (100-2000ms)
 
-### Setting Custom Text
-
-1. Click the pencil icon in the header
-2. Paste or type your text in the textarea
-3. Click "Apply" to load the text
-4. Click "Play" to start reading
-
 ## Project Structure
 
 ```
 rsvp/
 ├── src/
-│   ├── App.svelte          # Main application component
-│   ├── app.css             # Global styles
-│   ├── main.js             # Application entry point
+│   ├── App.svelte              # Main application component
+│   ├── app.css                 # Global styles
+│   ├── main.js                 # Application entry point
 │   ├── lib/
-│   │   └── rsvp-utils.js   # Core RSVP utility functions
+│   │   ├── rsvp-utils.js       # Core RSVP utility functions
+│   │   ├── file-parsers.js     # PDF and EPUB parsing utilities
+│   │   └── components/
+│   │       ├── RSVPDisplay.svelte   # Word display component
+│   │       ├── Controls.svelte      # Playback controls
+│   │       ├── Settings.svelte      # Settings panel
+│   │       ├── TextInput.svelte     # Text/file input panel
+│   │       └── ProgressBar.svelte   # Progress indicator
 │   └── tests/
-│       ├── setup.js        # Test setup
+│       ├── setup.js            # Test setup
 │       └── rsvp-utils.test.js  # Unit tests
 ├── index.html
 ├── package.json
@@ -179,6 +195,20 @@ shouldPauseAtWord(10, 10) // true
 shouldPauseAtWord(5, 10)  // false
 ```
 
+### File Parsers (`src/lib/file-parsers.js`)
+
+#### `parsePDF(file)`
+Extracts text content from a PDF file.
+
+#### `parseEPUB(file)`
+Extracts text content from an EPUB e-book.
+
+#### `parseFile(file)`
+Auto-detects file type and parses accordingly.
+
+#### `getSupportedExtensions()`
+Returns supported file extensions (`.pdf,.epub`).
+
 ## Browser Support
 
 Works in all modern browsers:
@@ -186,6 +216,13 @@ Works in all modern browsers:
 - Firefox
 - Safari
 - Edge
+
+## Dependencies
+
+- **pdfjs-dist**: PDF parsing
+- **epubjs**: EPUB e-book parsing
+- **Svelte 5**: UI framework
+- **Vite**: Build tool
 
 ## Contributing
 
@@ -206,3 +243,5 @@ This project is open source and available under the [MIT License](LICENSE).
 - Based on RSVP research in cognitive psychology
 - Inspired by various speed reading applications
 - Built with [Svelte](https://svelte.dev/) and [Vite](https://vitejs.dev/)
+- PDF parsing powered by [PDF.js](https://mozilla.github.io/pdf.js/)
+- EPUB parsing powered by [Epub.js](https://github.com/futurepress/epub.js/)
