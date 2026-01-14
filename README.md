@@ -97,6 +97,32 @@ npm run preview
 | `G` | Open jump to position dialog |
 | `Ctrl+S` / `Cmd+S` | Save current progress |
 
+### Saving and Resuming Progress
+
+**Save Progress:**
+- Click the save icon in the header (floppy disk icon)
+- Or press `Ctrl+S` (Windows/Linux) or `Cmd+S` (Mac)
+- Your current position, text, and all settings are saved to browser storage
+
+**Resume Reading:**
+- When you return to the app, you'll be prompted to resume your saved session
+- Click "Resume" to continue from where you left off
+- Click "Start Fresh" to begin with the default text
+
+### Jump to Position
+
+**Using the Jump Dialog:**
+1. Click the code bracket icon in the header, or press `G`
+2. Enter a word number (e.g., `150`) or percentage (e.g., `50%`)
+3. Click "Go" or press Enter
+
+**Quick Jump Buttons:**
+- Use the preset buttons (Start, 25%, 50%, 75%) for quick navigation
+
+**Clickable Progress Bar:**
+- When not playing, click anywhere on the progress bar to jump directly to that position
+- The progress bar expands on hover to make clicking easier
+
 ### Settings
 
 Click the gear icon to access settings:
@@ -120,15 +146,18 @@ rsvp/
 │   ├── lib/
 │   │   ├── rsvp-utils.js       # Core RSVP utility functions
 │   │   ├── file-parsers.js     # PDF and EPUB parsing utilities
+│   │   ├── progress-storage.js # Session save/load utilities
 │   │   └── components/
 │   │       ├── RSVPDisplay.svelte   # Word display component
 │   │       ├── Controls.svelte      # Playback controls
 │   │       ├── Settings.svelte      # Settings panel
 │   │       ├── TextInput.svelte     # Text/file input panel
-│   │       └── ProgressBar.svelte   # Progress indicator
+│   │       └── ProgressBar.svelte   # Progress indicator (clickable)
 │   └── tests/
-│       ├── setup.js            # Test setup
-│       └── rsvp-utils.test.js  # Unit tests
+│       ├── setup.js                 # Test setup
+│       ├── rsvp-utils.test.js       # RSVP utility tests
+│       ├── file-parsers.test.js     # File parser tests
+│       └── progress-storage.test.js # Progress storage tests
 ├── index.html
 ├── package.json
 ├── vite.config.js
@@ -217,6 +246,66 @@ Auto-detects file type and parses accordingly.
 
 #### `getSupportedExtensions()`
 Returns supported file extensions (`.pdf,.epub`).
+
+### Progress Storage (`src/lib/progress-storage.js`)
+
+#### `saveSession(session)`
+Saves the current reading session to localStorage.
+
+```javascript
+saveSession({
+  text: 'Your text content...',
+  currentWordIndex: 150,
+  totalWords: 500,
+  settings: { wordsPerMinute: 300 }
+}) // true
+```
+
+#### `loadSession()`
+Loads a saved reading session from localStorage.
+
+```javascript
+const session = loadSession()
+// { text: '...', currentWordIndex: 150, totalWords: 500, settings: {...}, savedAt: 1234567890 }
+```
+
+#### `hasSession()`
+Checks if a saved session exists.
+
+```javascript
+hasSession() // true or false
+```
+
+#### `clearSession()`
+Removes the saved session from localStorage.
+
+```javascript
+clearSession() // true
+```
+
+#### `getSessionSummary()`
+Gets session info without loading the full text.
+
+```javascript
+getSessionSummary()
+// { currentWordIndex: 150, totalWords: 500, savedAt: 1234567890, hasText: true }
+```
+
+#### `percentageToWordIndex(percentage, totalWords)`
+Converts a percentage to a word index.
+
+```javascript
+percentageToWordIndex(50, 100) // 50
+percentageToWordIndex(25, 200) // 50
+```
+
+#### `wordIndexToPercentage(wordIndex, totalWords)`
+Converts a word index to a percentage.
+
+```javascript
+wordIndexToPercentage(50, 100) // 50
+wordIndexToPercentage(25, 50) // 50
+```
 
 ## Browser Support
 
