@@ -215,6 +215,36 @@ describe('getWordDelay', () => {
   it('should handle empty word', () => {
     expect(getWordDelay('', 300)).toBe(200)
   })
+
+  it('should increase delay for long words when multiplier is set', () => {
+    // 300 WPM base = 200ms
+    // "extraordinary" is 13 chars, 1 char above threshold of 12
+    // With 10% multiplier: 200 * (1 + 0.1 * 1) = 220ms
+    expect(getWordDelay('extraordinary', 300, false, 2, 10)).toBeCloseTo(220)
+
+    // "acknowledgement" is 15 chars, 3 chars above threshold
+    // With 10% multiplier: 200 * (1 + 0.1 * 3) = 260ms
+    expect(getWordDelay('acknowledgement', 300, false, 2, 10)).toBeCloseTo(260)
+  })
+
+  it('should not increase delay for long words when multiplier is 0', () => {
+    // Default multiplier is 0, so long words should have normal delay
+    expect(getWordDelay('extraordinary', 300, false, 2, 0)).toBeCloseTo(200)
+    expect(getWordDelay('acknowledgement', 300, false, 2)).toBeCloseTo(200)
+  })
+
+  it('should not affect short words regardless of multiplier', () => {
+    // "hello" is 5 chars, below threshold of 12
+    expect(getWordDelay('hello', 300, false, 2, 10)).toBeCloseTo(200)
+    // "programming" is 11 chars, still below threshold
+    expect(getWordDelay('programming', 300, false, 2, 10)).toBeCloseTo(200)
+  })
+
+  it('should combine long word delay with punctuation delay', () => {
+    // "extraordinary." is 14 chars (13 letters + period), 2 chars above threshold
+    // Base: 200ms, long word: 200 * 1.2 = 240ms, punctuation 2x: 480ms
+    expect(getWordDelay('extraordinary.', 300, true, 2, 10)).toBeCloseTo(480)
+  })
 })
 
 describe('formatTimeRemaining', () => {
