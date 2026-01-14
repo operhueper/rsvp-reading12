@@ -41,7 +41,7 @@ export function getORPIndex(word) {
  * @returns {number} The actual character index in the word
  */
 // Pre-compiled regex for performance
-const unicodeLetterRegex = /\p{L}/u;
+const unicodeLetterRegex = /\p{L}/u
 
 export function getActualORPIndex(word) {
   if (!word || typeof word !== "string") return 0;
@@ -51,8 +51,8 @@ export function getActualORPIndex(word) {
 
   for (let i = 0; i < word.length; i++) {
     if (unicodeLetterRegex.test(word[i])) {
-      if (letterCount === orpIndex) return i;
-      letterCount++;
+      if (letterCount === orpIndex) return i
+      letterCount++
     }
   }
 
