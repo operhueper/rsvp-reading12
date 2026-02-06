@@ -66,13 +66,13 @@
 
   <!-- Speed buttons for quick adjustment -->
   <div class="speed-controls">
-    <button class="speed-btn" on:click={() => changeSpeed(-50)} title="Slower">
+    <button class="speed-btn" on:click={() => changeSpeed(-50)} title="Медленнее">
       <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
         <path d="M19 13H5v-2h14v2z"/>
       </svg>
     </button>
     <span class="speed-value" class:flash={showOverlay}>{wpm}</span>
-    <button class="speed-btn" on:click={() => changeSpeed(50)} title="Faster">
+    <button class="speed-btn" on:click={() => changeSpeed(50)} title="Быстрее">
       <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
       </svg>
@@ -83,7 +83,7 @@
   {#if showOverlay}
     <div class="wpm-overlay" class:visible={showOverlay}>
       <span class="wpm-big">{wpm}</span>
-      <span class="wpm-unit">WPM</span>
+      <span class="wpm-unit">сл/мин</span>
     </div>
   {/if}
 {/if}

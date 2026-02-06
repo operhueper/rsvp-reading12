@@ -28,8 +28,8 @@
 
 <div class="text-input-panel">
   <div class="panel-header">
-    <h3>Load Content</h3>
-    <button class="close-icon" on:click={handleClose} title="Close">
+    <h3>Загрузить контент</h3>
+    <button class="close-icon" on:click={handleClose} title="Закрыть">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
       </svg>
@@ -49,7 +49,7 @@
         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z"/>
       </svg>
       <div class="upload-text">
-        <span>Upload File</span>
+        <span>Загрузить файл</span>
         <span class="upload-formats">PDF, EPUB, FB2, TXT</span>
       </div>
     </button>
@@ -64,15 +64,15 @@
 
   <textarea
     bind:value={text}
-    placeholder="Paste or type your text here..."
+    placeholder="Вставьте или введите текст..."
     rows="8"
     disabled={isLoading}
   ></textarea>
 
   <div class="panel-actions">
-    <button class="btn-secondary" on:click={handleClose}>Cancel</button>
+    <button class="btn-secondary" on:click={handleClose}>Отмена</button>
     <button class="btn-primary" on:click={handleApply} disabled={isLoading || !text.trim()}>
-      Load Text
+      Загрузить текст
     </button>
   </div>
 </div>

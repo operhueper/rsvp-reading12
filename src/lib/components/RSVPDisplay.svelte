@@ -58,7 +58,7 @@
         {/if}
       </span>
     {:else}
-      <span class="placeholder">Ready</span>
+      <span class="placeholder">Готов</span>
     {/if}
   </div>
 </div>

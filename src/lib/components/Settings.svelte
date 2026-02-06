@@ -22,8 +22,8 @@
 
 <div class="settings-panel">
   <div class="settings-header">
-    <h3>Settings</h3>
-    <button class="close-btn" on:click={close} title="Close">
+    <h3>Настройки</h3>
+    <button class="close-btn" on:click={close} title="Закрыть">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
       </svg>
@@ -36,7 +36,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor" class="section-icon">
         <path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44zm-9.79 6.84a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/>
       </svg>
-      <span>Speed</span>
+      <span>Скорость</span>
     </div>
 
     <div class="wpm-control">
@@ -54,11 +54,11 @@
 
     <div class="control-row">
       <div class="control-header">
-        <span>Lower WPM for longer words</span>
+        <span>Замедлять длинные слова</span>
         <span class="control-value">{wordLengthWPMMultiplier}%</span>
       </div>
       <input type="range" min="0" max="50" step="1" bind:value={wordLengthWPMMultiplier} class="slider">
-      <p class="hint-text">How many percentage points each letter increases pause duration</p>
+      <p class="hint-text">На сколько процентов каждая буква увеличивает задержку</p>
     </div>
   </section>
 
@@ -67,16 +67,16 @@
       <svg viewBox="0 0 24 24" fill="currentColor" class="section-icon">
         <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
       </svg>
-      <span>Display</span>
+      <span>Отображение</span>
     </div>
 
     <div class="control-row">
       <div class="control-header">
-        <span>Words shown simultaneously</span>
+        <span>Количество слов одновременно</span>
         <span class="control-value">{frameWordCount}</span>
       </div>
       <input type="range" min="1" max="7" step="2" bind:value={frameWordCount} class="slider">
-      <p class="hint-text">Odd numbers (1, 3, 5, 7) center the highlight best</p>
+      <p class="hint-text">Нечётные числа (1, 3, 5, 7) лучше центрируют подсветку</p>
     </div>
   </section>
 
@@ -86,11 +86,11 @@
       <svg viewBox="0 0 24 24" fill="currentColor" class="section-icon">
         <path d="M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a.996.996 0 0 0-1.41 0L1.29 18.96a.996.996 0 0 0 0 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a.996.996 0 0 0 0-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z"/>
       </svg>
-      <span>Effects</span>
+      <span>Эффекты</span>
     </div>
 
     <div class="toggle-row">
-      <span class="toggle-label">Word fade</span>
+      <span class="toggle-label">Затухание слов</span>
       <button class="toggle" class:active={fadeEnabled} on:click={() => fadeEnabled = !fadeEnabled} role="switch" aria-checked={fadeEnabled}>
         <span class="toggle-thumb"></span>
       </button>
@@ -99,7 +99,7 @@
     {#if fadeEnabled}
       <div class="sub-control">
         <div class="control-header">
-          <span>Duration</span>
+          <span>Длительность</span>
           <span class="control-value">{fadeDuration}ms</span>
         </div>
         <input type="range" min="50" max="300" step="25" bind:value={fadeDuration} class="slider slider-sm">
@@ -113,11 +113,11 @@
       <svg viewBox="0 0 24 24" fill="currentColor" class="section-icon">
         <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
       </svg>
-      <span>Pauses</span>
+      <span>Паузы</span>
     </div>
 
     <div class="toggle-row">
-      <span class="toggle-label">Pause on punctuation</span>
+      <span class="toggle-label">Пауза на знаках препинания</span>
       <button class="toggle" class:active={pauseOnPunctuation} on:click={() => pauseOnPunctuation = !pauseOnPunctuation} role="switch" aria-checked={pauseOnPunctuation}>
         <span class="toggle-thumb"></span>
       </button>
@@ -126,7 +126,7 @@
     {#if pauseOnPunctuation}
       <div class="sub-control">
         <div class="control-header">
-          <span>Pause multiplier</span>
+          <span>Множитель паузы</span>
           <span class="control-value">{punctuationPauseMultiplier}x</span>
         </div>
         <input type="range" min="1" max="4" step="0.5" bind:value={punctuationPauseMultiplier} class="slider slider-sm">
@@ -135,7 +135,7 @@
 
     <div class="control-row">
       <div class="control-header">
-        <span>Pause every N words</span>
+        <span>Пауза каждые N слов</span>
         <span class="control-value">{pauseAfterWords === 0 ? 'Off' : pauseAfterWords}</span>
       </div>
       <input type="range" min="0" max="50" step="5" bind:value={pauseAfterWords} class="slider">
@@ -144,7 +144,7 @@
     {#if pauseAfterWords > 0}
       <div class="sub-control">
         <div class="control-header">
-          <span>Pause duration</span>
+          <span>Длительность паузы</span>
           <span class="control-value">{pauseDuration}ms</span>
         </div>
         <input type="range" min="100" max="2000" step="100" bind:value={pauseDuration} class="slider slider-sm">

@@ -69,7 +69,7 @@
     aria-valuenow={clickable ? Math.round(progress) : undefined}
     aria-valuemin={clickable ? 0 : undefined}
     aria-valuemax={clickable ? 100 : undefined}
-    aria-label={clickable ? "Reading progress" : undefined}
+    aria-label={clickable ? "Прогресс чтения" : undefined}
     on:click={handleClick}
     on:touchstart={handleTouch}
     on:keydown={handleKeydown}
@@ -94,7 +94,7 @@
           {currentChapter.length > 25 ? currentChapter.slice(0, 25) + '…' : currentChapter}
         </span>
       {/if}
-      <span class="stat wpm">{wpm} WPM</span>
+      <span class="stat wpm">{wpm} сл/мин</span>
       <span class="stat">{timeRemaining}</span>
     </div>
   {:else}

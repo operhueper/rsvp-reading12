@@ -57,7 +57,7 @@
   let fadeTimeoutId = null;
 
   let demoWord = '';
-  let demoWords = ['Read', 'faster.', 'See', 'one', 'word', 'at', 'a', 'time.'];
+  let demoWords = ['Читай', 'быстрее.', 'Одно', 'слово', 'за', 'раз.'];
   let demoIndex = 0;
   let demoInterval = null;
 
@@ -108,7 +108,7 @@
   async function handleFileSelect(event) {
     const file = event.detail.file;
     if (!file) return;
-    isLoadingFile = true; loadingMessage = `Loading ${file.name}...`;
+    isLoadingFile = true; loadingMessage = `Загрузка ${file.name}...`;
     try {
       const result = await parseFile(file);
       text = result.text; chapters = result.chapters || []; currentBookTitle = result.title || file.name;
@@ -116,7 +116,7 @@
       currentBookId = await saveBook({ text, title: currentBookTitle, currentWordIndex: 0, totalWords: words.length, chapters, settings: getSettings() });
       await refreshLibrary(); loadingMessage = '';
     } catch (error) {
-      console.error('Error parsing file:', error); loadingMessage = `Error: ${error.message}`;
+      console.error('Error parsing file:', error); loadingMessage = `Ошибка: ${error.message}`;
       setTimeout(() => { loadingMessage = ''; }, 3000);
     } finally { isLoadingFile = false; }
   }
@@ -207,11 +207,11 @@
         {#if currentBookTitle}<span class="book-title">{currentBookTitle}</span>{/if}
       </div>
       <div class="header-actions">
-        {#if currentBookId}<button class="icon-btn" on:click={() => { showBookmarks = !showBookmarks; showSettings = false; showTextInput = false; showLibrary = false; showJumpTo = false; }} title="Bookmarks" class:active={showBookmarks}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg></button>{/if}
-        {#if library.length > 0}<button class="icon-btn" on:click={() => { showLibrary = !showLibrary; showSettings = false; showTextInput = false; showBookmarks = false; showJumpTo = false; }} title="Library" class:active={showLibrary}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg></button>{/if}
-        {#if words.length > 0}<button class="icon-btn" on:click={() => { showJumpTo = !showJumpTo; showSettings = false; showTextInput = false; showLibrary = false; showBookmarks = false; }} title="Jump to (G)" class:active={showJumpTo}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></button>{/if}
-        <button class="icon-btn" on:click={() => { showTextInput = !showTextInput; showSettings = false; showJumpTo = false; showLibrary = false; showBookmarks = false; }} title="Load Content" class:active={showTextInput}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg></button>
-        <button class="icon-btn" on:click={() => { showSettings = !showSettings; showTextInput = false; showJumpTo = false; showLibrary = false; showBookmarks = false; }} title="Settings" class:active={showSettings}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg></button>
+        {#if currentBookId}<button class="icon-btn" on:click={() => { showBookmarks = !showBookmarks; showSettings = false; showTextInput = false; showLibrary = false; showJumpTo = false; }} title="Закладки" class:active={showBookmarks}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg></button>{/if}
+        {#if library.length > 0}<button class="icon-btn" on:click={() => { showLibrary = !showLibrary; showSettings = false; showTextInput = false; showBookmarks = false; showJumpTo = false; }} title="Библиотека" class:active={showLibrary}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg></button>{/if}
+        {#if words.length > 0}<button class="icon-btn" on:click={() => { showJumpTo = !showJumpTo; showSettings = false; showTextInput = false; showLibrary = false; showBookmarks = false; }} title="Перейти (G)" class:active={showJumpTo}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg></button>{/if}
+        <button class="icon-btn" on:click={() => { showTextInput = !showTextInput; showSettings = false; showJumpTo = false; showLibrary = false; showBookmarks = false; }} title="Загрузить" class:active={showTextInput}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg></button>
+        <button class="icon-btn" on:click={() => { showSettings = !showSettings; showTextInput = false; showJumpTo = false; showLibrary = false; showBookmarks = false; }} title="Настройки" class:active={showSettings}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1112 8.4a3.6 3.6 0 010 7.2z"/></svg></button>
       </div>
     </header>
   {/if}
@@ -222,14 +222,14 @@
   {#if showJumpTo && !isFocusMode}
     <div class="panel-overlay" on:click|self={() => showJumpTo = false} role="presentation">
       <div class="modal-panel">
-        <h3>Jump to position</h3>
-        <p class="hint">Enter word number or percentage (e.g., 50%)</p>
+        <h3>Перейти к позиции</h3>
+        <p class="hint">Введите номер слова или процент (напр., 50%)</p>
         <form on:submit|preventDefault={() => jumpToWord(jumpToValue)}>
-          <input type="text" bind:value={jumpToValue} placeholder="Word # or %" autofocus />
-          <div class="modal-actions"><button type="button" class="btn-sec" on:click={() => showJumpTo = false}>Cancel</button><button type="submit" class="btn-pri">Go</button></div>
+          <input type="text" bind:value={jumpToValue} placeholder="Слово № или %" autofocus />
+          <div class="modal-actions"><button type="button" class="btn-sec" on:click={() => showJumpTo = false}>Отмена</button><button type="submit" class="btn-pri">Перейти</button></div>
         </form>
-        <div class="quick-jumps"><button on:click={() => jumpToWord('0')}>Start</button><button on:click={() => jumpToWord('25%')}>25%</button><button on:click={() => jumpToWord('50%')}>50%</button><button on:click={() => jumpToWord('75%')}>75%</button></div>
-        {#if chapters.length > 0}<div class="chapter-list"><h4>Chapters</h4><div class="chapter-scroll">{#each chapters as ch}<button class="chapter-btn" on:click={() => { jumpToChapter(ch); showJumpTo = false; }}><span class="ch-title">{ch.title}</span><span class="ch-pct">{Math.round((ch.wordIndex / words.length) * 100)}%</span></button>{/each}</div></div>{/if}
+        <div class="quick-jumps"><button on:click={() => jumpToWord('0')}>Начало</button><button on:click={() => jumpToWord('25%')}>25%</button><button on:click={() => jumpToWord('50%')}>50%</button><button on:click={() => jumpToWord('75%')}>75%</button></div>
+        {#if chapters.length > 0}<div class="chapter-list"><h4>Главы</h4><div class="chapter-scroll">{#each chapters as ch}<button class="chapter-btn" on:click={() => { jumpToChapter(ch); showJumpTo = false; }}><span class="ch-title">{ch.title}</span><span class="ch-pct">{Math.round((ch.wordIndex / words.length) * 100)}%</span></button>{/each}</div></div>{/if}
       </div>
     </div>
   {/if}
@@ -237,9 +237,9 @@
   {#if showLibrary && !isFocusMode}
     <div class="panel-overlay" on:click|self={() => showLibrary = false} role="presentation">
       <div class="modal-panel wide">
-        <div class="modal-header"><h3>📚 Library</h3><button class="close-x" on:click={() => showLibrary = false}>✕</button></div>
-        {#if library.length === 0}<p class="empty">No books yet.</p>
-        {:else}<div class="book-list">{#each library as book}<div class="book-item" class:active={currentBookId === book.id}><button class="book-info" on:click={() => openBook(book.id)}><span class="book-name">{book.title}</span><div class="book-meta"><span>{book.progress}%</span><span>•</span><span>{book.totalWords.toLocaleString()} words</span></div><div class="mini-bar"><div class="mini-fill" style="width:{book.progress}%"></div></div></button><button class="del-btn" on:click|stopPropagation={() => removeBook(book.id)}>✕</button></div>{/each}</div>{/if}
+        <div class="modal-header"><h3>📚 Библиотека</h3><button class="close-x" on:click={() => showLibrary = false}>✕</button></div>
+        {#if library.length === 0}<p class="empty">Книг пока нет.</p>
+        {:else}<div class="book-list">{#each library as book}<div class="book-item" class:active={currentBookId === book.id}><button class="book-info" on:click={() => openBook(book.id)}><span class="book-name">{book.title}</span><div class="book-meta"><span>{book.progress}%</span><span>•</span><span>{book.totalWords.toLocaleString()} слов</span></div><div class="mini-bar"><div class="mini-fill" style="width:{book.progress}%"></div></div></button><button class="del-btn" on:click|stopPropagation={() => removeBook(book.id)}>✕</button></div>{/each}</div>{/if}
       </div>
     </div>
   {/if}
@@ -247,9 +247,9 @@
   {#if showBookmarks && !isFocusMode}
     <div class="panel-overlay" on:click|self={() => showBookmarks = false} role="presentation">
       <div class="modal-panel">
-        <div class="modal-header"><h3>🔖 Bookmarks</h3><button class="close-x" on:click={() => showBookmarks = false}>✕</button></div>
-        <div class="add-bm"><input type="text" bind:value={newBookmarkLabel} placeholder="Name (optional)" /><button class="btn-pri" on:click={addCurrentBookmark}>+ Word {currentWordIndex}</button></div>
-        {#if bookmarks.length === 0}<p class="empty">No bookmarks yet.</p>
+        <div class="modal-header"><h3>🔖 Закладки</h3><button class="close-x" on:click={() => showBookmarks = false}>✕</button></div>
+        <div class="add-bm"><input type="text" bind:value={newBookmarkLabel} placeholder="Название (необязательно)" /><button class="btn-pri" on:click={addCurrentBookmark}>+ Слово {currentWordIndex}</button></div>
+        {#if bookmarks.length === 0}<p class="empty">Закладок пока нет.</p>
         {:else}{#each bookmarks as bm}<div class="bm-item"><button class="bm-info" on:click={() => goToBookmark(bm.wordIndex)}><span class="bm-label">{bm.label}</span><span class="bm-preview">{bm.preview}</span></button><button class="del-btn" on:click|stopPropagation={() => removeBookmarkItem(bm.id)}>✕</button></div>{/each}{/if}
       </div>
     </div>
@@ -259,29 +259,29 @@
   {#if isWelcome}
     <div class="welcome">
       <div class="demo-container"><div class="demo-marker"></div><span class="demo-word" key={demoWord}>{demoWord}</span></div>
-      <h2>Speed read anything</h2>
-      <p class="welcome-sub">RSVP displays words one at a time at a fixed point — your eyes stay still, your brain reads faster.</p>
-      <button class="cta-btn" on:click={() => { showTextInput = true; stopDemo(); }}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z"/></svg>Upload a book</button>
+      <h2>Читай быстрее</h2>
+      <p class="welcome-sub">RSVP показывает слова по одному в фиксированной точке — глаза не двигаются, мозг читает быстрее.</p>
+      <button class="cta-btn" on:click={() => { showTextInput = true; stopDemo(); }}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z"/></svg>Загрузить книгу</button>
       <p class="formats-hint">PDF, EPUB, FB2, TXT</p>
 
       {#if library.length > 0}
-        <div class="continue-reading"><h4>Continue reading</h4>
-          {#each library.slice(0, 3) as book}<button class="continue-btn" on:click={() => openBook(book.id)}><div class="continue-info"><span class="continue-title">{book.title}</span><span class="continue-meta">{book.progress}% · {book.totalWords.toLocaleString()} words</span></div><div class="continue-bar"><div class="continue-fill" style="width:{book.progress}%"></div></div></button>{/each}
+        <div class="continue-reading"><h4>Продолжить чтение</h4>
+          {#each library.slice(0, 3) as book}<button class="continue-btn" on:click={() => openBook(book.id)}><div class="continue-info"><span class="continue-title">{book.title}</span><span class="continue-meta">{book.progress}% · {book.totalWords.toLocaleString()} слов</span></div><div class="continue-bar"><div class="continue-fill" style="width:{book.progress}%"></div></div></button>{/each}
         </div>
       {/if}
 
       <div class="features">
-        <div class="feature"><div class="feature-icon">⚡</div><div class="feature-text"><strong>300–1000 WPM</strong><span>Adjust speed on the fly while reading</span></div></div>
-        <div class="feature"><div class="feature-icon">🎯</div><div class="feature-text"><strong>ORP highlighting</strong><span>Red letter shows optimal focus point</span></div></div>
-        <div class="feature"><div class="feature-icon">📑</div><div class="feature-text"><strong>Chapters & bookmarks</strong><span>Navigate by chapters, save your spot</span></div></div>
-        <div class="feature"><div class="feature-icon">💾</div><div class="feature-text"><strong>Auto-save progress</strong><span>Pick up where you left off, always</span></div></div>
+        <div class="feature"><div class="feature-icon">⚡</div><div class="feature-text"><strong>300–1000 сл/мин</strong><span>Меняй скорость прямо во время чтения</span></div></div>
+        <div class="feature"><div class="feature-icon">🎯</div><div class="feature-text"><strong>ORP-подсветка</strong><span>Красная буква — оптимальная точка фокуса</span></div></div>
+        <div class="feature"><div class="feature-icon">📑</div><div class="feature-text"><strong>Главы и закладки</strong><span>Навигация по главам, сохранение позиции</span></div></div>
+        <div class="feature"><div class="feature-icon">💾</div><div class="feature-text"><strong>Автосохранение</strong><span>Продолжай с того места, где остановился</span></div></div>
       </div>
 
-      <div class="how-to"><h4>How to use</h4>
+      <div class="how-to"><h4>Как пользоваться</h4>
         <div class="steps">
-          <div class="step"><span class="step-num">1</span><span>Upload a book or paste text</span></div>
-          <div class="step"><span class="step-num">2</span><span>Hit <kbd>Space</kbd> or tap Play</span></div>
-          <div class="step"><span class="step-num">3</span><span>Use <kbd>↑</kbd><kbd>↓</kbd> or swipe to adjust speed</span></div>
+          <div class="step"><span class="step-num">1</span><span>Загрузи книгу или вставь текст</span></div>
+          <div class="step"><span class="step-num">2</span><span>Нажми <kbd>Space</kbd> или кнопку Старт</span></div>
+          <div class="step"><span class="step-num">3</span><span>Используй <kbd>↑</kbd><kbd>↓</kbd> или свайп для скорости</span></div>
         </div>
       </div>
     </div>
@@ -299,7 +299,7 @@
       <ProgressBar {progress} currentWord={currentWordIndex} totalWords={words.length} wpm={wordsPerMinute} {timeRemaining} minimal={isFocusMode} clickable={!isPlaying} {chapters} on:seek={handleProgressClick} />
       <div class="controls-area"><Controls {isPlaying} {isPaused} canPlay={words.length > 0} minimal={isFocusMode} on:play={start} on:pause={pause} on:resume={resume} on:stop={stop} on:restart={restart} /></div>
       {#if !isFocusMode}
-        <div class="shortcuts desktop-only"><kbd>Space</kbd> Play <kbd>Esc</kbd> Exit <kbd>↑↓</kbd> Speed <kbd>←→</kbd> Skip <kbd>G</kbd> Jump <kbd>B</kbd> Bookmark</div>
+        <div class="shortcuts desktop-only"><kbd>Space</kbd> Старт <kbd>Esc</kbd> Выход <kbd>↑↓</kbd> Скорость <kbd>←→</kbd> Пропуск <kbd>G</kbd> Перейти <kbd>B</kbd> Закладка</div>
         <div class="touch-controls mobile-only">
           <button class="touch-btn" on:click={() => currentWordIndex = Math.max(0, currentWordIndex - 10)}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
           <button class="touch-btn" on:click={() => wordsPerMinute = Math.max(50, wordsPerMinute - 50)}>−WPM</button>

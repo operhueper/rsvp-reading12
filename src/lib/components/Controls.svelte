@@ -15,34 +15,34 @@
       class="control-btn play"
       on:click={() => dispatch('play')}
       disabled={!canPlay}
-      title="Play (Space)"
+      title="Старт (Space)"
     >
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M8 5v14l11-7z"/>
       </svg>
-      {#if !minimal}<span>Play</span>{/if}
+      {#if !minimal}<span>Старт</span>{/if}
     </button>
   {:else if isPlaying}
     <button
       class="control-btn pause"
       on:click={() => dispatch('pause')}
-      title="Pause (Space)"
+      title="Пауза (Space)"
     >
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
       </svg>
-      {#if !minimal}<span>Pause</span>{/if}
+      {#if !minimal}<span>Пауза</span>{/if}
     </button>
   {:else}
     <button
       class="control-btn play"
       on:click={() => dispatch('resume')}
-      title="Resume (Space)"
+      title="Продолжить (Space)"
     >
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M8 5v14l11-7z"/>
       </svg>
-      {#if !minimal}<span>Resume</span>{/if}
+      {#if !minimal}<span>Продолжить</span>{/if}
     </button>
   {/if}
 
@@ -50,12 +50,12 @@
     class="control-btn stop"
     on:click={() => dispatch('stop')}
     disabled={!isPlaying && !isPaused}
-    title="Stop (Esc)"
+    title="Стоп (Esc)"
   >
     <svg viewBox="0 0 24 24" fill="currentColor">
       <path d="M6 6h12v12H6z"/>
     </svg>
-    {#if !minimal}<span>Stop</span>{/if}
+    {#if !minimal}<span>Стоп</span>{/if}
   </button>
 
   {#if !minimal}
@@ -63,12 +63,12 @@
       class="control-btn restart"
       on:click={() => dispatch('restart')}
       disabled={!canPlay}
-      title="Restart"
+      title="Заново"
     >
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
       </svg>
-      <span>Restart</span>
+      <span>Заново</span>
     </button>
   {/if}
 </div>
