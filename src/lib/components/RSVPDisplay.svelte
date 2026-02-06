@@ -10,21 +10,13 @@
   export let multiWordEnabled = false;
 
   $: useMultiMode = multiWordEnabled && wordGroup.length > 0;
-
-  // Get the current word (either from single mode or the highlighted word in group)
   $: currentWord = useMultiMode ? (wordGroup[highlightIndex] || '') : word;
-
-  // Always calculate ORP for the current word
   $: orpIdx = currentWord ? getActualORPIndex(currentWord) : -1;
   $: wordPrefix = currentWord ? currentWord.slice(0, orpIdx) : '';
   $: focusChar = currentWord ? (currentWord[orpIdx] || '') : '';
   $: wordSuffix = currentWord ? currentWord.slice(orpIdx + 1) : '';
-
-  // Words before and after the highlighted word (for multi-word mode)
   $: wordsBefore = useMultiMode ? wordGroup.slice(0, highlightIndex) : [];
   $: wordsAfter = useMultiMode ? wordGroup.slice(highlightIndex + 1) : [];
-
-  // FIX: Detect Hebrew, Arabic, and other RTL scripts
   $: isRtl = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(currentWord);
 </script>
 
@@ -40,10 +32,8 @@
     style="opacity: {opacity}; transition: opacity {fadeEnabled ? fadeDuration : 0}ms ease-in-out;"
   >
     {#if currentWord}
-      <!-- ORP letter always centered at 50% -->
       <span class="orp">{focusChar}</span>
 
-      <!-- Content before ORP: prefix of current word + words before -->
       <span class="before-orp" style="direction: {isRtl ? 'rtl' : 'ltr'}">
         {#if isRtl}
           {wordSuffix}{#if useMultiMode && wordsAfter.length > 0}
@@ -56,7 +46,6 @@
         {/if}
       </span>
 
-      <!-- Content after ORP: suffix of current word + words after -->
       <span class="after-orp" style="direction: {isRtl ? 'rtl' : 'ltr'}">
         {#if isRtl}
           {#if useMultiMode && wordsBefore.length > 0}
@@ -79,12 +68,15 @@
     position: relative;
     width: 100%;
     height: 100%;
-    min-height: 300px;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
     overflow: hidden;
+    /* Critical: contain the absolute children */
+    padding: 0;
+    margin: 0;
   }
 
   .focus-marker {
@@ -92,7 +84,7 @@
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
-    width: 3px;
+    width: 2px;
     pointer-events: none;
     z-index: 10;
   }
@@ -101,7 +93,7 @@
     position: absolute;
     left: 0;
     width: 100%;
-    height: 50px;
+    height: 40px;
   }
 
   .marker-line.top {
@@ -117,23 +109,27 @@
   .word-container {
     position: relative;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', 'Menlo', 'Consolas', monospace;
-    font-size: clamp(3rem, 8vw, 6rem);
+    /* KEY FIX: Use vw-based sizing that works on mobile */
+    font-size: clamp(2rem, 7vw, 5rem);
     font-weight: 500;
     line-height: 1;
     white-space: nowrap;
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Container needs width for absolute children to position against */
+    /* KEY FIX: Use percentage-based width with max constraint */
     width: 100%;
+    max-width: 100vw;
     height: 1.2em;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Prevent overflow on mobile */
+    overflow: hidden;
   }
 
   .word-container.multi-mode {
-    font-size: clamp(1.2rem, 4vw, 3rem);
+    font-size: clamp(1rem, 3.5vw, 2.5rem);
   }
 
   .context-words {
@@ -143,55 +139,79 @@
 
   .orp {
     position: absolute;
+    /* KEY FIX: Exact center of container */
     left: 50%;
     transform: translateX(-50%);
     color: #ff4444;
     font-weight: 700;
-    text-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+    text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
     z-index: 2;
   }
 
   .before-orp {
     position: absolute;
-    left: 50%;
-    transform: translateX(calc(-100% - 0.5ch));
+    /* KEY FIX: Position from exact center, offset by half a character */
+    right: 50%;
+    margin-right: 0.25ch;
+    left: auto;
     color: #fff;
-    /* direction: ltr; -- REMOVED to support dynamic RTL/LTR via inline style */
-    text-align: right; /* Keeps text growing towards the center */
+    text-align: right;
+    /* Prevent long prefixes from overflowing left */
+    max-width: 48%;
+    overflow: hidden;
   }
 
   .after-orp {
     position: absolute;
-    left: calc(50% + 0.5ch);
+    /* KEY FIX: Position from exact center */
+    left: 50%;
+    margin-left: 0.75ch;
     color: #fff;
     text-align: left;
+    /* Prevent long suffixes from overflowing right */
+    max-width: 48%;
+    overflow: hidden;
   }
 
   .placeholder {
     color: #333;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 300;
     font-family: system-ui, sans-serif;
     line-height: 1;
   }
 
+  /* Mobile-specific fixes */
   @media (max-width: 600px) {
     .rsvp-display {
-      min-height: 200px;
+      min-height: 150px;
     }
 
     .marker-line {
-      height: 30px;
+      height: 25px;
+    }
+
+    .word-container {
+      /* Slightly smaller on mobile for better fit */
+      font-size: clamp(1.75rem, 6.5vw, 3.5rem);
     }
 
     .word-container.multi-mode {
-      font-size: clamp(0.9rem, 3.5vw, 2rem);
+      font-size: clamp(0.85rem, 3vw, 1.75rem);
+    }
+
+    .focus-marker {
+      width: 2px;
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 380px) {
+    .word-container {
+      font-size: clamp(1.5rem, 6vw, 3rem);
+    }
+
     .word-container.multi-mode {
-      font-size: clamp(0.75rem, 3vw, 1.5rem);
+      font-size: clamp(0.75rem, 2.5vw, 1.5rem);
     }
   }
 </style>

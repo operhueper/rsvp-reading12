@@ -48,7 +48,10 @@
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z"/>
       </svg>
-      <span>Upload PDF or EPUB</span>
+      <div class="upload-text">
+        <span>Upload File</span>
+        <span class="upload-formats">PDF, EPUB, FB2, TXT</span>
+      </div>
     </button>
     {#if loadingMessage}
       <p class="loading-message">{loadingMessage}</p>
@@ -84,46 +87,13 @@
     max-width: 500px;
   }
 
-  .panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  h3 {
-    margin: 0;
-    font-weight: 500;
-    color: #fff;
-    font-size: 1.1rem;
-  }
-
-  .close-icon {
-    background: transparent;
-    border: none;
-    color: #666;
-    cursor: pointer;
-    padding: 0.25rem;
-    display: flex;
-    transition: color 0.2s;
-  }
-
-  .close-icon:hover {
-    color: #fff;
-  }
-
-  .close-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .hidden-input {
-    display: none;
-  }
-
-  .upload-section {
-    margin-bottom: 1rem;
-  }
+  .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  h3 { margin: 0; font-weight: 500; color: #fff; font-size: 1.1rem; }
+  .close-icon { background: transparent; border: none; color: #666; cursor: pointer; padding: 0.25rem; display: flex; transition: color 0.2s; }
+  .close-icon:hover { color: #fff; }
+  .close-icon svg { width: 20px; height: 20px; }
+  .hidden-input { display: none; }
+  .upload-section { margin-bottom: 1rem; }
 
   .upload-btn {
     width: 100%;
@@ -131,7 +101,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    padding: 1rem;
+    padding: 1.25rem;
     background: #1a1a1a;
     border: 2px dashed #444;
     border-radius: 8px;
@@ -141,129 +111,34 @@
     transition: all 0.2s;
   }
 
-  .upload-btn:hover:not(:disabled) {
-    border-color: #ff4444;
-    color: #fff;
-    background: #222;
-  }
+  .upload-btn:hover:not(:disabled) { border-color: #ff4444; color: #fff; background: #222; }
+  .upload-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .upload-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
 
-  .upload-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .upload-text { display: flex; flex-direction: column; align-items: flex-start; }
+  .upload-formats { font-size: 0.75rem; color: #666; margin-top: 2px; }
 
-  .upload-btn svg {
-    width: 24px;
-    height: 24px;
-  }
+  .loading-message { margin: 0.75rem 0 0; color: #ff4444; font-size: 0.9rem; text-align: center; }
 
-  .loading-message {
-    margin: 0.75rem 0 0;
-    color: #ff4444;
-    font-size: 0.9rem;
-    text-align: center;
-  }
+  .divider { display: flex; align-items: center; margin: 1.25rem 0; color: #555; font-size: 0.85rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #333; }
+  .divider span { padding: 0 1rem; }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    margin: 1.25rem 0;
-    color: #555;
-    font-size: 0.85rem;
-  }
+  textarea { width: 100%; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; color: #fff; padding: 1rem; font-size: 0.95rem; font-family: inherit; resize: vertical; box-sizing: border-box; min-height: 120px; }
+  textarea:focus { outline: none; border-color: #555; }
+  textarea:disabled { opacity: 0.5; }
 
-  .divider::before,
-  .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #333;
-  }
-
-  .divider span {
-    padding: 0 1rem;
-  }
-
-  textarea {
-    width: 100%;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #fff;
-    padding: 1rem;
-    font-size: 0.95rem;
-    font-family: inherit;
-    resize: vertical;
-    box-sizing: border-box;
-    min-height: 120px;
-  }
-
-  textarea:focus {
-    outline: none;
-    border-color: #555;
-  }
-
-  textarea:disabled {
-    opacity: 0.5;
-  }
-
-  .panel-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .panel-actions button {
-    flex: 1;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-secondary {
-    background: #222;
-    border: 1px solid #444;
-    color: #aaa;
-  }
-
-  .btn-secondary:hover {
-    background: #333;
-    color: #fff;
-  }
-
-  .btn-primary {
-    background: #ff4444;
-    border: none;
-    color: #fff;
-  }
-
-  .btn-primary:hover:not(:disabled) {
-    background: #ff5555;
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .panel-actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
+  .panel-actions button { flex: 1; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary { background: #222; border: 1px solid #444; color: #aaa; }
+  .btn-secondary:hover { background: #333; color: #fff; }
+  .btn-primary { background: #ff4444; border: none; color: #fff; }
+  .btn-primary:hover:not(:disabled) { background: #ff5555; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
   @media (max-width: 600px) {
-    .text-input-panel {
-      max-width: 100%;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-
-    textarea {
-      min-height: 100px;
-      font-size: 16px; /* Prevents iOS zoom */
-    }
-
-    .upload-btn {
-      padding: 0.875rem;
-      font-size: 0.9rem;
-    }
+    .text-input-panel { max-width: 100%; padding: 1rem; border-radius: 8px; }
+    textarea { min-height: 100px; font-size: 16px; }
+    .upload-btn { padding: 1rem; font-size: 0.9rem; }
   }
 </style>

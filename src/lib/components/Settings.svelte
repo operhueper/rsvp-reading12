@@ -17,7 +17,6 @@
     dispatch('close');
   }
 
-  // Quick WPM presets
   const wpmPresets = [200, 300, 400, 500];
 </script>
 
@@ -45,23 +44,10 @@
         <span class="wpm-value">{wordsPerMinute}</span>
         <span class="wpm-label">words/min</span>
       </div>
-      <input
-        type="range"
-        min="50"
-        max="1000"
-        step="25"
-        bind:value={wordsPerMinute}
-        class="slider"
-      >
+      <input type="range" min="50" max="1000" step="25" bind:value={wordsPerMinute} class="slider">
       <div class="wpm-presets">
         {#each wpmPresets as preset}
-          <button
-            class="preset-btn"
-            class:active={wordsPerMinute === preset}
-            on:click={() => wordsPerMinute = preset}
-          >
-            {preset}
-          </button>
+          <button class="preset-btn" class:active={wordsPerMinute === preset} on:click={() => wordsPerMinute = preset}>{preset}</button>
         {/each}
       </div>
     </div>
@@ -105,14 +91,7 @@
 
     <div class="toggle-row">
       <span class="toggle-label">Word fade</span>
-      <button
-        class="toggle"
-        class:active={fadeEnabled}
-        on:click={() => fadeEnabled = !fadeEnabled}
-        role="switch"
-        aria-checked={fadeEnabled}
-        aria-label="Toggle word fade effect"
-      >
+      <button class="toggle" class:active={fadeEnabled} on:click={() => fadeEnabled = !fadeEnabled} role="switch" aria-checked={fadeEnabled}>
         <span class="toggle-thumb"></span>
       </button>
     </div>
@@ -139,14 +118,7 @@
 
     <div class="toggle-row">
       <span class="toggle-label">Pause on punctuation</span>
-      <button
-        class="toggle"
-        class:active={pauseOnPunctuation}
-        on:click={() => pauseOnPunctuation = !pauseOnPunctuation}
-        role="switch"
-        aria-checked={pauseOnPunctuation}
-        aria-label="Toggle pause on punctuation"
-      >
+      <button class="toggle" class:active={pauseOnPunctuation} on:click={() => pauseOnPunctuation = !pauseOnPunctuation} role="switch" aria-checked={pauseOnPunctuation}>
         <span class="toggle-thumb"></span>
       </button>
     </div>
@@ -188,8 +160,10 @@
     border-radius: 20px;
     padding: 2rem;
     width: 480px;
+    max-width: 100%;
     max-height: 85vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .settings-header {
@@ -201,310 +175,60 @@
     border-bottom: 1px solid #1a1a1a;
   }
 
-  h3 {
-    margin: 0;
-    font-weight: 600;
-    color: #fff;
-    font-size: 1.5rem;
-    letter-spacing: -0.01em;
-  }
+  h3 { margin: 0; font-weight: 600; color: #fff; font-size: 1.5rem; letter-spacing: -0.01em; }
+  .close-btn { background: transparent; border: none; color: #444; cursor: pointer; padding: 0.5rem; display: flex; border-radius: 10px; transition: all 0.15s; }
+  .close-btn:hover { color: #fff; background: #1a1a1a; }
+  .close-btn svg { width: 24px; height: 24px; }
 
-  .close-btn {
-    background: transparent;
-    border: none;
-    color: #444;
-    cursor: pointer;
-    padding: 0.5rem;
-    display: flex;
-    border-radius: 10px;
-    transition: all 0.15s;
-  }
+  .settings-section { margin-bottom: 2rem; }
+  .settings-section:last-child { margin-bottom: 0; }
+  .section-header { display: flex; align-items: center; gap: 0.625rem; color: #666; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .section-icon { width: 18px; height: 18px; opacity: 0.7; }
 
-  .close-btn:hover {
-    color: #fff;
-    background: #1a1a1a;
-  }
+  .wpm-control { background: #111; border-radius: 16px; padding: 1.5rem; }
+  .wpm-display { text-align: center; margin-bottom: 1.25rem; }
+  .wpm-value { font-size: 4rem; font-weight: 700; color: #fff; font-family: 'SF Mono', 'Monaco', monospace; letter-spacing: -0.02em; }
+  .wpm-label { display: block; color: #555; font-size: 0.95rem; margin-top: -0.25rem; }
 
-  .close-btn svg {
-    width: 24px;
-    height: 24px;
-  }
+  .wpm-presets { display: flex; gap: 0.75rem; margin-top: 1.25rem; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .wpm-presets::-webkit-scrollbar { display: none; }
+  .preset-btn { flex: 1; min-width: fit-content; background: #1a1a1a; border: 1px solid #252525; color: #888; padding: 0.75rem 1rem; border-radius: 10px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+  .preset-btn:hover { background: #222; color: #fff; border-color: #333; }
+  .preset-btn.active { background: #ff4444; border-color: #ff4444; color: #fff; }
 
-  /* Sections */
-  .settings-section {
-    margin-bottom: 2rem;
-  }
+  .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 0.875rem 0; }
+  .toggle-label { color: #ccc; font-size: 1.1rem; }
+  .toggle { position: relative; width: 56px; height: 32px; background: #222; border: none; border-radius: 16px; cursor: pointer; transition: background 0.2s; padding: 0; }
+  .toggle.active { background: #ff4444; }
+  .toggle-thumb { position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; background: #666; border-radius: 50%; transition: all 0.2s; }
+  .toggle.active .toggle-thumb { left: 28px; background: #fff; }
 
-  .settings-section:last-child {
-    margin-bottom: 0;
-  }
+  .control-row { padding: 0.875rem 0; }
+  .control-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+  .control-header span:first-child { color: #ccc; font-size: 1.1rem; }
+  .control-value { color: #ff4444; font-size: 1rem; font-weight: 600; font-family: 'SF Mono', 'Monaco', monospace; }
+  .sub-control { padding: 0.75rem 0 0.75rem 1.25rem; margin-left: 0.75rem; border-left: 2px solid #1a1a1a; }
+  .sub-control .control-header span:first-child { color: #888; font-size: 1rem; }
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    color: #666;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 1rem;
-  }
+  .slider { width: 100%; height: 8px; background: #222; border-radius: 4px; appearance: none; cursor: pointer; outline: none; }
+  .slider::-webkit-slider-thumb { appearance: none; width: 24px; height: 24px; background: #ff4444; border-radius: 50%; cursor: pointer; transition: transform 0.1s; box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3); }
+  .slider::-webkit-slider-thumb:hover { transform: scale(1.1); box-shadow: 0 2px 12px rgba(255, 68, 68, 0.5); }
+  .slider::-moz-range-thumb { width: 24px; height: 24px; background: #ff4444; border-radius: 50%; cursor: pointer; border: none; box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3); }
+  .slider-sm::-webkit-slider-thumb { width: 20px; height: 20px; }
+  .slider-sm::-moz-range-thumb { width: 20px; height: 20px; }
 
-  .section-icon {
-    width: 18px;
-    height: 18px;
-    opacity: 0.7;
-  }
+  .settings-panel::-webkit-scrollbar { width: 6px; }
+  .settings-panel::-webkit-scrollbar-track { background: transparent; }
+  .settings-panel::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  .hint-text { margin: 0.5rem 0 0; color: #666; font-size: 0.8rem; line-height: 1.3; }
 
-  /* WPM Control */
-  .wpm-control {
-    background: #111;
-    border-radius: 16px;
-    padding: 1.5rem;
-  }
-
-  .wpm-display {
-    text-align: center;
-    margin-bottom: 1.25rem;
-  }
-
-  .wpm-value {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #fff;
-    font-family: 'SF Mono', 'Monaco', monospace;
-    letter-spacing: -0.02em;
-  }
-
-  .wpm-label {
-    display: block;
-    color: #555;
-    font-size: 0.95rem;
-    margin-top: -0.25rem;
-  }
-
-  .wpm-presets {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .wpm-presets::-webkit-scrollbar {
-    display: none;
-  }
-
-  .preset-btn {
-    flex: 1;
-    min-width: fit-content;
-    background: #1a1a1a;
-    border: 1px solid #252525;
-    color: #888;
-    padding: 0.75rem 1rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
-  .preset-btn:hover {
-    background: #222;
-    color: #fff;
-    border-color: #333;
-  }
-
-  .preset-btn.active {
-    background: #ff4444;
-    border-color: #ff4444;
-    color: #fff;
-  }
-
-  /* Toggle switches */
-  .toggle-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.875rem 0;
-  }
-
-  .toggle-label {
-    color: #ccc;
-    font-size: 1.1rem;
-  }
-
-  .toggle {
-    position: relative;
-    width: 56px;
-    height: 32px;
-    background: #222;
-    border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-    padding: 0;
-  }
-
-  .toggle.active {
-    background: #ff4444;
-  }
-
-  .toggle-thumb {
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 24px;
-    height: 24px;
-    background: #666;
-    border-radius: 50%;
-    transition: all 0.2s;
-  }
-
-  .toggle.active .toggle-thumb {
-    left: 28px;
-    background: #fff;
-  }
-
-  /* Control rows */
-  .control-row {
-    padding: 0.875rem 0;
-  }
-
-  .control-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-  }
-
-  .control-header span:first-child {
-    color: #ccc;
-    font-size: 1.1rem;
-  }
-
-  .control-value {
-    color: #ff4444;
-    font-size: 1rem;
-    font-weight: 600;
-    font-family: 'SF Mono', 'Monaco', monospace;
-  }
-
-  .sub-control {
-    padding: 0.75rem 0 0.75rem 1.25rem;
-    margin-left: 0.75rem;
-    border-left: 2px solid #1a1a1a;
-  }
-
-  .sub-control .control-header span:first-child {
-    color: #888;
-    font-size: 1rem;
-  }
-
-  /* Sliders */
-  .slider {
-    width: 100%;
-    height: 8px;
-    background: #222;
-    border-radius: 4px;
-    appearance: none;
-    cursor: pointer;
-    outline: none;
-  }
-
-  .slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 24px;
-    height: 24px;
-    background: #ff4444;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s;
-    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
-  }
-
-  .slider::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: 0 2px 12px rgba(255, 68, 68, 0.5);
-  }
-
-  .slider::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
-    background: #ff4444;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
-  }
-
-  .slider-sm::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-  }
-
-  .slider-sm::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Scrollbar */
-  .settings-panel::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .settings-panel::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .settings-panel::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 3px;
-  }
-  
-  .hint-text {
-    margin: 0.5rem 0 0;
-    color: #666;
-    font-size: 0.8rem;
-    line-height: 1.3;
-  }
-  /* Mobile */
   @media (max-width: 600px) {
-    .settings-panel {
-      width: 100%;
-      max-width: none;
-      border-radius: 16px;
-      padding: 1.5rem;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-    }
-
-    .wpm-value {
-      font-size: 3rem;
-    }
-
-    .slider::-webkit-slider-thumb {
-      width: 28px;
-      height: 28px;
-    }
-
-    .toggle {
-      width: 60px;
-      height: 36px;
-    }
-
-    .toggle-thumb {
-      width: 28px;
-      height: 28px;
-    }
-
-    .toggle.active .toggle-thumb {
-      left: 28px;
-    }
+    .settings-panel { width: 100%; max-width: none; border-radius: 16px; padding: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    .wpm-value { font-size: 3rem; }
+    .slider::-webkit-slider-thumb { width: 28px; height: 28px; }
+    .toggle { width: 60px; height: 36px; }
+    .toggle-thumb { width: 28px; height: 28px; }
+    .toggle.active .toggle-thumb { left: 28px; }
   }
 </style>

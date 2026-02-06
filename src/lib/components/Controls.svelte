@@ -17,16 +17,10 @@
       disabled={!canPlay}
       title="Play (Space)"
     >
-      {#if minimal}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-      {:else}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-        <span>Play</span>
-      {/if}
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      {#if !minimal}<span>Play</span>{/if}
     </button>
   {:else if isPlaying}
     <button
@@ -34,16 +28,10 @@
       on:click={() => dispatch('pause')}
       title="Pause (Space)"
     >
-      {#if minimal}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-        </svg>
-      {:else}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-        </svg>
-        <span>Pause</span>
-      {/if}
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      </svg>
+      {#if !minimal}<span>Pause</span>{/if}
     </button>
   {:else}
     <button
@@ -51,16 +39,10 @@
       on:click={() => dispatch('resume')}
       title="Resume (Space)"
     >
-      {#if minimal}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-      {:else}
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M8 5v14l11-7z"/>
-        </svg>
-        <span>Resume</span>
-      {/if}
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      {#if !minimal}<span>Resume</span>{/if}
     </button>
   {/if}
 
@@ -70,16 +52,10 @@
     disabled={!isPlaying && !isPaused}
     title="Stop (Esc)"
   >
-    {#if minimal}
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 6h12v12H6z"/>
-      </svg>
-    {:else}
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 6h12v12H6z"/>
-      </svg>
-      <span>Stop</span>
-    {/if}
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 6h12v12H6z"/>
+    </svg>
+    {#if !minimal}<span>Stop</span>{/if}
   </button>
 
   {#if !minimal}
@@ -121,23 +97,27 @@
     transition: all 0.2s;
     font-weight: 500;
     color: #fff;
+    /* Better touch targets */
+    min-height: 44px;
+    min-width: 44px;
   }
 
   .controls.minimal .control-btn {
     padding: 0.5rem;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
   }
 
   .control-btn svg {
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
   }
 
   .controls.minimal .control-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
 
   .control-btn:disabled {
@@ -151,6 +131,11 @@
 
   .control-btn.play:hover:not(:disabled) {
     background: #ff6666;
+  }
+
+  .control-btn.play:active:not(:disabled) {
+    background: #cc3333;
+    transform: scale(0.95);
   }
 
   .control-btn.pause {
@@ -179,7 +164,7 @@
 
     .control-btn {
       padding: 0.875rem 1.25rem;
-      min-height: 48px; /* Touch-friendly minimum */
+      min-height: 48px;
     }
 
     .control-btn span {
@@ -187,8 +172,8 @@
     }
 
     .controls.minimal .control-btn {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
     }
   }
 </style>
