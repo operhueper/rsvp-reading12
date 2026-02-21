@@ -37,15 +37,15 @@ export async function parsePDF(file) {
     const textContent = await page.getTextContent();
     const pageText = textContent.items
       .filter(item => 'str' in item)
-      .map(item => /** @type {{ str: string }} */ (item).str)
+      .map(item => /** @type {{ str: string }} */(item).str)
       .join(' ');
 
     pageBreaks.push({ page: i, charIndex: fullText.length });
-    fullText += pageText + ' ';
+    fullText += pageText + '\n';
   }
 
+  const chapters = detectChapters(fullText);
   const cleanedText = cleanText(fullText);
-  const chapters = detectChapters(cleanedText);
 
   return {
     text: cleanedText,
@@ -144,6 +144,7 @@ export async function parseEPUB(file) {
     }
   }
 
+  const chaptersFromText = chapters.length > 0 ? [] : detectChapters(fullText);
   const cleanedText = cleanText(fullText);
   const allWords = cleanedText.split(/\s+/).filter(w => w.length > 0);
 
@@ -154,7 +155,7 @@ export async function parseEPUB(file) {
   }
 
   // If no chapters detected from TOC, try auto-detection
-  const finalChapters = chapters.length > 0 ? chapters : detectChapters(cleanedText);
+  const finalChapters = chapters.length > 0 ? chapters : chaptersFromText;
 
   return {
     text: cleanedText,
@@ -222,6 +223,7 @@ export async function parseFB2(file) {
     }
   }
 
+  const chaptersFromText = chapters.length > 0 ? [] : detectChapters(fullText);
   const cleanedText = cleanText(fullText);
   const allWords = cleanedText.split(/\s+/).filter(w => w.length > 0);
 
@@ -231,7 +233,7 @@ export async function parseFB2(file) {
     chapters[i].wordCount = nextStart - chapters[i].wordIndex;
   }
 
-  const finalChapters = chapters.length > 0 ? chapters : detectChapters(cleanedText);
+  const finalChapters = chapters.length > 0 ? chapters : chaptersFromText;
 
   return {
     text: cleanedText,
@@ -247,8 +249,8 @@ export async function parseFB2(file) {
  */
 export async function parseTXT(file) {
   const text = await file.text();
+  const chapters = detectChapters(text);
   const cleanedText = cleanText(text);
-  const chapters = detectChapters(cleanedText);
 
   return {
     text: cleanedText,

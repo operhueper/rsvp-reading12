@@ -152,7 +152,7 @@
     position: absolute;
     /* KEY FIX: Position from exact center, offset by half a character */
     right: 50%;
-    margin-right: 0.25ch;
+    margin-right: 0.5ch;
     left: auto;
     color: #fff;
     text-align: right;
@@ -165,7 +165,7 @@
     position: absolute;
     /* KEY FIX: Position from exact center */
     left: 50%;
-    margin-left: 0.75ch;
+    margin-left: 0.5ch;
     color: #fff;
     text-align: left;
     /* Prevent long suffixes from overflowing right */

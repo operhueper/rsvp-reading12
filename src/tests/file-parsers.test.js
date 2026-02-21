@@ -6,7 +6,8 @@ function createMockFile(content, name, type) {
   return {
     name,
     type,
-    arrayBuffer: () => Promise.resolve(new ArrayBuffer(content.length))
+    arrayBuffer: () => Promise.resolve(new ArrayBuffer(content.length)),
+    text: () => Promise.resolve(content)
   }
 }
 
@@ -27,7 +28,7 @@ import { parseFile, getSupportedExtensions } from '../lib/file-parsers.js'
 describe('getSupportedExtensions', () => {
   it('should return supported file extensions', () => {
     const extensions = getSupportedExtensions()
-    expect(extensions).toBe('.pdf,.epub')
+    expect(extensions).toBe('.pdf,.epub,.fb2,.txt')
   })
 
   it('should include pdf extension', () => {
@@ -42,10 +43,10 @@ describe('getSupportedExtensions', () => {
 })
 
 describe('parseFile', () => {
-  it('should throw error for unsupported file types', async () => {
-    const file = createMockFile('content', 'test.txt', 'text/plain')
-
-    await expect(parseFile(file)).rejects.toThrow('Unsupported file type')
+  it('should parse TXT files', async () => {
+    const file = createMockFile('Hello TXT content', 'test.txt', 'text/plain')
+    const result = await parseFile(file)
+    expect(result.text).toBe('Hello TXT content')
   })
 
   it('should throw error for doc files', async () => {
@@ -62,8 +63,8 @@ describe('parseFile', () => {
 
   it('should handle files with uppercase extensions', async () => {
     const file = createMockFile('content', 'test.TXT', 'text/plain')
-
-    await expect(parseFile(file)).rejects.toThrow('Unsupported file type: test.txt')
+    const result = await parseFile(file)
+    expect(result.text).toBe('content')
   })
 })
 
@@ -99,7 +100,7 @@ describe('parsePDF', () => {
     const result = await parseFile(file)
 
     expect(pdfjsLib.getDocument).toHaveBeenCalled()
-    expect(result).toBe('Hello World')
+    expect(result.text).toBe('Hello World')
   })
 
   it('should handle multi-page PDFs', async () => {
@@ -133,7 +134,7 @@ describe('parsePDF', () => {
     const result = await parseFile(file)
 
     expect(mockPdf.getPage).toHaveBeenCalledTimes(2)
-    expect(result).toBe('Page One Page Two')
+    expect(result.text).toBe('Page One Page Two')
   })
 
   it('should filter out non-text items from PDF', async () => {
@@ -162,7 +163,7 @@ describe('parsePDF', () => {
 
     const result = await parseFile(file)
 
-    expect(result).toBe('Text Content')
+    expect(result.text).toBe('Text Content')
   })
 })
 
@@ -195,7 +196,7 @@ describe('parseEPUB', () => {
     const result = await parseFile(file)
 
     expect(epubjs.default).toHaveBeenCalled()
-    expect(result).toBe('Chapter content here')
+    expect(result.text).toBe('Chapter content here')
   })
 
   it('should handle EPUB with multiple chapters', async () => {
@@ -224,7 +225,7 @@ describe('parseEPUB', () => {
 
     const result = await parseFile(file)
 
-    expect(result).toBe('Chapter One Chapter Two')
+    expect(result.text).toBe('Chapter One Chapter Two')
   })
 
   it('should handle failed section loads gracefully', async () => {
@@ -254,7 +255,7 @@ describe('parseEPUB', () => {
     // Should not throw, should continue with other sections
     const result = await parseFile(file)
 
-    expect(result).toBe('Working chapter')
+    expect(result.text).toBe('Working chapter')
   })
 })
 
@@ -290,8 +291,8 @@ describe('text cleaning', () => {
     const result = await parseFile(file)
 
     // Multiple spaces should be collapsed
-    expect(result).not.toContain('   ')
-    expect(result).toBe('Hello World')
+    expect(result.text).not.toContain('   ')
+    expect(result.text).toBe('Hello World')
   })
 
   it('should clean repeated punctuation', async () => {
@@ -319,6 +320,6 @@ describe('text cleaning', () => {
 
     const result = await parseFile(file)
 
-    expect(result).toBe('What? Really!')
+    expect(result.text).toBe('What? Really!')
   })
 })

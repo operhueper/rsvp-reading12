@@ -31,7 +31,7 @@ describe('progress-storage', () => {
   })
 
   describe('saveSession', () => {
-    it('should save session data to localStorage', () => {
+    it('should save session data to localStorage', async () => {
       const session = {
         text: 'Hello world test',
         currentWordIndex: 5,
@@ -42,9 +42,9 @@ describe('progress-storage', () => {
         }
       }
 
-      const result = saveSession(session)
+      const result = await saveSession(session)
 
-      expect(result).toBe(true)
+      expect(result).toBeTruthy()
       expect(localStorageMock.setItem).toHaveBeenCalled()
 
       const savedData = JSON.parse(localStorageMock.setItem.mock.calls[0][1])
@@ -55,10 +55,10 @@ describe('progress-storage', () => {
       expect(savedData.savedAt).toBeDefined()
     })
 
-    it('should include timestamp in saved data', () => {
+    it('should include timestamp in saved data', async () => {
       const before = Date.now()
 
-      saveSession({
+      await saveSession({
         text: 'Test',
         currentWordIndex: 0,
         totalWords: 1,

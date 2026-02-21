@@ -436,3 +436,27 @@ export function getSessionSummary() {
     return null;
   }
 }
+
+/**
+ * Convert percentage to word index
+ * @param {number} percentage - Percentage from 0 to 100
+ * @param {number} totalWords - Total number of words
+ * @returns {number} The corresponding word index
+ */
+export function percentageToWordIndex(percentage, totalWords) {
+  if (totalWords <= 0) return 0;
+  const p = Math.max(0, Math.min(100, percentage));
+  return Math.floor((p / 100) * totalWords);
+}
+
+/**
+ * Convert word index to percentage
+ * @param {number} wordIndex - Current word index
+ * @param {number} totalWords - Total number of words
+ * @returns {number} Percentage from 0 to 100
+ */
+export function wordIndexToPercentage(wordIndex, totalWords) {
+  if (totalWords <= 0) return 0;
+  return Math.round((wordIndex / totalWords) * 100);
+}
+
